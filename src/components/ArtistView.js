@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import Spinner from './Spinner';
 
-function ArtistView() {
+const ArtistView = () => {
     const navigate = useNavigate()
     const { id } = useParams()
     const [ artistData, setArtistData ] = useState([])
@@ -16,17 +17,15 @@ function ArtistView() {
         fetchData()
     }, [id])
 
-    const justAlbums = artistData.filter(entry => entry.collectionType === 'Album')
-
-    const renderAlbums = justAlbums.map((album, i) => {
+    const allAlbums = artistData.filter(entity => entity.collectionType === 'Album')
+    .map((album, i) => {
         return (
             <div key={i}>
                 <Link to={`/album/${album.collectionId}`}>
                     <p>{album.collectionName}</p>
                 </Link>
-            </div>
-        )
-    })
+            </div>)
+        })
 
     const navButtons = () => {
         return (
@@ -40,12 +39,12 @@ function ArtistView() {
 
     return (
         <div>
-            {artistData.length > 0 ? <h2>{artistData[0].artistName}</h2> : <h2>Loading...</h2>}
+            {artistData.length > 0 ? <h2>{artistData[0].artistName}</h2> : <Spinner />}
             {navButtons()}
-            {renderAlbums}
+            {allAlbums}
         </div>
     )
 }
 
 
-export default ArtistView
+export default ArtistView;
