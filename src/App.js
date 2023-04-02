@@ -17,7 +17,7 @@ const App = () => {
 
     const handleSearch = (e, term) => {
       e.preventDefault()
-      setSearch(fetchData(term, 'main'))
+      setData(fetchData(term))
   }
 
   const renderGallery = () => {
@@ -35,7 +35,7 @@ const App = () => {
       {message}
       <Router>
         <Route exact path={'/'}>
-          <SearchContext.Provider value={{term, handInput: handleSearch}}>
+          <SearchContext.Provider value={{term: searchInput, handleSearch: handleSearch }}>
             <SearchBar />
           </SearchContext.Provider>
             <DataContext.Provider value={data}>
